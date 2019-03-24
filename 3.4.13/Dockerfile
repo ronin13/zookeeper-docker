@@ -1,7 +1,7 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-alpine
 
 # Install required packages
-RUN apk add --no-cache \
+RUN apk add --no-cache bind-tools \
     bash \
     su-exec
 
@@ -46,7 +46,6 @@ RUN set -ex; \
     apk del .build-deps
 
 WORKDIR $DISTRO_NAME
-VOLUME ["$ZOO_DATA_DIR", "$ZOO_DATA_LOG_DIR", "$ZOO_LOG_DIR"]
 
 EXPOSE $ZOO_PORT 2888 3888
 
