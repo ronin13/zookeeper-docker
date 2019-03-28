@@ -32,9 +32,14 @@ myord=$((myord+1))
 
 for id in ${ZOO_IDS//,/ }; do
     tid=$(( id-1 ))
-    echo "server.${id}=${htemp}-${tid}.${sdomain}:2888:3888" >> "$CONFIG"
+    if [[ $id -eq $myord ]];then
+        echo "server.${id}=0.0.0.0:2888:3888" >> "$CONFIG"
+    else
+        echo "server.${id}=${htemp}-${tid}.${sdomain}:2888:3888" >> "$CONFIG"
+    fi
 done
 
 echo $myord > "$ZOO_DATA_DIR/myid"
 
+sleep 2
 exec "$@"
