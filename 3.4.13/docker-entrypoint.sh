@@ -40,6 +40,4 @@ for id in ${ZOO_IDS//,/ }; do
 done
 
 echo $myord > "$ZOO_DATA_DIR/myid"
-
-sleep 2
 exec "$@"
