@@ -12,7 +12,7 @@ CONFIG="$ZOO_CONF_DIR/zoo.cfg"
 
 echo "clientPort=$ZOO_PORT" >> "$CONFIG"
 echo "dataDir=$ZOO_DATA_DIR" >> "$CONFIG"
-echo "dataLogDir=$ZOO_DATA_LOG_DIR" >> "$CONFIG"
+#echo "dataLogDir=$ZOO_DATA_LOG_DIR" >> "$CONFIG"
 
 echo "tickTime=$ZOO_TICK_TIME" >> "$CONFIG"
 echo "initLimit=$ZOO_INIT_LIMIT" >> "$CONFIG"
@@ -21,6 +21,8 @@ echo "syncLimit=$ZOO_SYNC_LIMIT" >> "$CONFIG"
 echo "autopurge.snapRetainCount=$ZOO_AUTOPURGE_SNAPRETAINCOUNT" >> "$CONFIG"
 echo "autopurge.purgeInterval=$ZOO_AUTOPURGE_PURGEINTERVAL" >> "$CONFIG"
 echo "maxClientCnxns=$ZOO_MAX_CLIENT_CNXNS" >> "$CONFIG"
+
+echo "quorumListenOnAllIPs=true" >> "$CONFIG"
 
 myhostname=$(hostname)
 
@@ -39,7 +41,9 @@ for id in ${ZOO_IDS//,/ }; do
     fi
 done
 
-echo $myord > "$ZOO_DATA_DIR/myid"
+if [[ ! -f "$ZOO_DATA_DIR/myid" ]];then
+    echo $myord > "$ZOO_DATA_DIR/myid"
+fi
 
 sleep 2
 exec "$@"
